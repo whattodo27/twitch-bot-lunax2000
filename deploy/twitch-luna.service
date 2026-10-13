@@ -1,0 +1,28 @@
+[Unit]
+Description=Twitch Luna Bot (twitch-bot-detka)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Замените на своего пользователя
+User=vasia
+# Путь к проекту на сервере
+WorkingDirectory=/opt/twitch-bot-detka
+# В окружении — виртуальное окружение проекта
+ExecStart=/opt/twitch-bot-detka/.venv/bin/python /opt/twitch-bot-detka/main.py
+# Автоперезапуск при падении/перезагрузке
+Restart=always
+RestartSec=5
+# Подтягиваем секреты из .env
+EnvironmentFile=/opt/twitch-bot-detka/.env
+# Логи в журнал systemd
+StandardOutput=journal
+StandardError=journal
+
+# Безопасность (по желанию): ограничиваем права
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
